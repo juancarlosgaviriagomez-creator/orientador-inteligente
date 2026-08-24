@@ -1,0 +1,10 @@
+streamlit
+google-genai
+python-dotenv
+streamlit-mic-recorder
+gTTS
+reportlab
+requests
+joblib
+pandas
+scikit-learn
