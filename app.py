@@ -367,9 +367,9 @@ with st.sidebar:
 # ============================================
 # CHAT PRINCIPAL (limpio, sin interrupciones)
 # ============================================
-col1, col2 = st.columns([1, 10])
+col1, col2 = st.columns([1, 5])
 with col1:
-    st.image(icon, width=60)
+    st.image(icon, width=40)
 with col2:
     st.title("Orientador Inteligente")
 # ===== VIDEO DE PRESENTACIÓN (requisito 4.3) =====
