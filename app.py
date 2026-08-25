@@ -21,7 +21,16 @@ from reportlab.lib.units import cm
 # CONFIGURACIÓN INICIAL
 # ============================================
 load_dotenv()
-st.set_page_config(page_title="Orientador Inteligente", page_icon="🧭", layout="wide")
+
+# st.set_page_config(page_title="Orientador Inteligente", page_icon="🧭", layout="wide")
+
+import streamlit as st
+
+st.set_page_config(
+    page_title="Orientador Inteligente",
+    page_icon="orientador_icon.png",  # Ruta a tu imagen
+    layout="wide" # otros parámetros...
+)
 
 # ===== ESTILO CUSTOM PARA EL BOTÓN DE MICRÓFONO =====
 st.markdown("""
