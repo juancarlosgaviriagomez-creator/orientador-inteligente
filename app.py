@@ -448,7 +448,7 @@ if prompt:
                     else:
                         buf, fmt = texto_a_voz_gtts(respuesta)
                     try:
-                        st.audio(buf, format=f"audio/{fmt}", autoplay=auto_play)
+                        st.audio(buf, format=f"audio/{fmt}", autoplay=True)
                     except TypeError:
                         # Streamlit antiguo sin autoplay: muestra el player normal
                         st.audio(buf, format=f"audio/{fmt}")
