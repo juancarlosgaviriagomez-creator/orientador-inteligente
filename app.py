@@ -371,7 +371,7 @@ col1, col2 = st.columns([1, 10])
 with col1:
     st.image(icon, width=60)
 with col2:
-st.title("Orientador Inteligente")
+    st.title("Orientador Inteligente")
 # ===== VIDEO DE PRESENTACIÓN (requisito 4.3) =====
 with st.expander("🎬 Conoce al Orientador Inteligente (video 30 s)"):
     st.video("orientador_promo.mp4")
