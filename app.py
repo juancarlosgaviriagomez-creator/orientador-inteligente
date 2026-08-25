@@ -22,10 +22,6 @@ from reportlab.lib.units import cm
 # ============================================
 load_dotenv()
 
-# st.set_page_config(page_title="Orientador Inteligente", page_icon="🧭", layout="wide")
-
-import streamlit as st
-
 st.set_page_config(
     page_title="Orientador Inteligente",
     page_icon="orientador_icon.png",  # Ruta a tu imagen
