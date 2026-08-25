@@ -24,9 +24,11 @@ load_dotenv()
 
 st.set_page_config(
     page_title="Orientador Inteligente",
-    page_icon="orientador_icon.png",  # Ruta a tu imagen
-    layout="wide" # otros parámetros...
+    page_icon="./orientador_icon.png",  # Asegúrate que la imagen esté en la misma carpeta
+    layout="wide"
 )
+
+st.title("Tu App")
 
 # ===== ESTILO CUSTOM PARA EL BOTÓN DE MICRÓFONO =====
 st.markdown("""
