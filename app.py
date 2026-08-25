@@ -23,6 +23,23 @@ from reportlab.lib.units import cm
 load_dotenv()
 st.set_page_config(page_title="Orientador Inteligente", page_icon="🧭", layout="wide")
 
+# ===== ESTILO CUSTOM PARA EL BOTÓN DE MICRÓFONO =====
+st.markdown("""
+<style>
+    /* Centra verticalmente el botón de mic en la barra */
+    [data-testid="stChatInput"] {
+        margin-bottom: 0 !important;
+    }
+    /* Hace el botón de grabación más visible */
+    .stButton > button[kind="primary"] {
+        background-color: #1F4E79 !important;
+        color: white !important;
+        font-size: 1.3rem !important;
+        padding: 0.6rem !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 WEBHOOK_URL = "http://localhost:5678/webhook/orientador"
 
 api_key = os.getenv("GEMINI_API_KEY")
@@ -273,9 +290,7 @@ with st.sidebar:
     st.markdown("### 🎙️ Modo voz")
     voz_activada = st.toggle("🔊 Que el agente hable", value=True)
     motor_voz = st.selectbox("Motor de voz", ["Gemini TTS (natural)", "gTTS (clásica)"])
-    auto_play = st.toggle("▶️ Reproducción automática", value=True)
-    st.markdown("Presiona el micrófono, habla y suéltalo:")
-    audio = mic_recorder(key="mic")
+    audio = None  # se captura en la barra del chat    
     st.markdown("---")
     st.markdown("### 📄 Guía personalizada")
     nombre_usuario = st.text_input("Tu nombre", "")
@@ -370,7 +385,37 @@ if audio and audio.get("bytes"):
         else:
             st.warning("🎙️ No te entendí bien, intenta de nuevo.")
 
-texto_escrito = st.chat_input("Escribe tu mensaje o usa el micrófono...")
+# ===== BARRA INFERIOR: INPUT DE TEXTO + BOTÓN DE MICRÓFONO =====
+col_texto, col_mic = st.columns([7, 1], gap="small")
+
+with col_texto:
+    texto_escrito = st.chat_input("Escribe tu mensaje...", key="chat_input_bar")
+
+with col_mic:
+    # Botón visual de micrófono con streamlit_mic_recorder
+    audio = mic_recorder(
+        start_prompt="🎙️",
+        stop_prompt="⏹️",
+        just_once=True,
+        use_container_width=True,
+        key="mic_chat"
+    )
+
+# ===== PROCESAR ENTRADA (voz o texto) =====
+prompt = None
+
+# Si se grabó audio, transcribir con Gemini
+if audio and audio.get("bytes"):
+    firma = len(audio["bytes"])
+    if st.session_state.get("last_audio_sig") != firma:
+        st.session_state.last_audio_sig = firma
+        texto_voz = transcribir_audio(audio["bytes"])
+        if texto_voz:
+            prompt = texto_voz
+        else:
+            st.warning("🎙️ No te entendí bien, intenta de nuevo.")
+
+# Si escribieron texto, tiene prioridad
 if texto_escrito:
     prompt = texto_escrito
 
