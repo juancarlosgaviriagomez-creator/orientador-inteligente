@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 import os, io, re, json, time, wave, requests
 from datetime import datetime
 import joblib, pandas as pd
+from PIL import Image
+
+# Cargar la imagen
+icon = Image.open("orientador_icon.png")
 
 # ===== VOZ (grabación en navegador) =====
 from streamlit_mic_recorder import mic_recorder
@@ -289,7 +293,8 @@ def sanitizar(nombre):
 # SIDEBAR (incluye PDF para no interrumpir el chat)
 # ============================================
 with st.sidebar:
-    st.title("🧭 Orientador Inteligente")
+    st.sidebar.image(icon, width=80)
+    st.sidebar.title("Orientador Inteligente")   
     st.success(f"✅ Modelo activo: {st.session_state.get('modelo_ok', modelo_activo)}")
     st.markdown("---")
     st.markdown("### 🎙️ Modo voz")
@@ -362,7 +367,11 @@ with st.sidebar:
 # ============================================
 # CHAT PRINCIPAL (limpio, sin interrupciones)
 # ============================================
-st.title("🧭 Orientador Inteligente")
+col1, col2 = st.columns([1, 10])
+with col1:
+    st.image(icon, width=60)
+with col2:
+st.title("Orientador Inteligente")
 # ===== VIDEO DE PRESENTACIÓN (requisito 4.3) =====
 with st.expander("🎬 Conoce al Orientador Inteligente (video 30 s)"):
     st.video("orientador_promo.mp4")
